@@ -13,7 +13,7 @@ body{
     align-items:center;
     background:linear-gradient(180deg,#6a0dad,#b185db);
     overflow:hidden;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI', sans-serif;
 }
 
 /* corazones flotando */
@@ -22,60 +22,78 @@ body{
     color:#e0aaff;
     animation: float 7s infinite;
 }
-
 @keyframes float{
     0%{transform: translateY(100vh);}
     100%{transform: translateY(-10vh);}
 }
 
-/* tulipanes flotando */
+/* tulipanes */
 .tulip{
     position:absolute;
     font-size:22px;
     animation: float 9s infinite;
 }
 
-/* contenedor */
-.container{
-    text-align:center;
+/* SOBRE */
+.envelope{
+    width:320px;
+    height:220px;
+    background:#9d4edd;
     position:relative;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+    border-left:160px solid transparent;
+    border-right:160px solid transparent;
+    border-top:120px solid #c77dff;
+    transform-origin:top;
+    transition:0.6s;
+}
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+/* CARTA */
+.card{
+    position:absolute;
+    width:300px;
+    height:380px;
     background:rgba(255,255,255,0.1);
-    padding:40px;
-    border-radius:25px;
     backdrop-filter: blur(6px);
-}
-
-/* corazón grande */
-.big-heart{
-    font-size:130px;
-    color:#e0aaff;
-}
-
-/* texto principal */
-h1{
+    border-radius:20px;
+    top:-400px;
+    left:10px;
+    padding:25px;
+    text-align:center;
     color:white;
-    margin-top:-90px;
+    transition:0.8s;
 }
 
-/* frases */
-.frases{
-    color:#f8edff;
-    margin-top:15px;
-    font-size:18px;
+.envelope.open .card{
+    top:-420px;
 }
 
-/* botones */
-.buttons{
-    margin-top:25px;
+.big-heart{
+    font-size:90px;
+    margin-top:-20px;
 }
 
 button{
-    padding:12px 25px;
-    font-size:18px;
+    padding:10px 20px;
+    font-size:17px;
     border:none;
-    border-radius:12px;
+    border-radius:10px;
     cursor:pointer;
-    margin:10px;
+    margin:8px;
 }
 
 #yes{
@@ -93,39 +111,49 @@ button{
 
 <body>
 
-<div class="container">
-    <div class="big-heart">💜</div>
+<div class="envelope" onclick="abrir()" id="sobre">
+    <div class="flap"></div>
 
-    <h1>Alisson Marmolejo</h1>
+    <div class="card">
+        <div class="big-heart">💜</div>
+        <h2>Alisson Marmolejo</h2>
 
-    <div class="frases">
         <p>¿Quieres ser mi San Valentín?</p>
+
         <p>Eres la razón por la que sonrío sin darme cuenta.</p>
         <p>Contigo todo se siente más bonito.</p>
+        <p>Tu presencia alegra mis días como los tulipanes en primavera 🌷</p>
         <p>Si el amor tuviera un nombre… sería el tuyo.</p>
-    </div>
 
-    <div class="buttons">
-        <button id="yes" onclick="aceptar()">Sí 💜</button>
-        <button id="no">No</button>
+        <p><b>Con cariño:</b><br>Tu pedacito de melocotón 🍑</p>
+
+        <div>
+            <button id="yes" onclick="aceptar(event)">Sí 💜</button>
+            <button id="no">No</button>
+        </div>
     </div>
 </div>
 
 <script>
-// corazones de fondo
-for(let i=0;i<35;i++){
-    let heart = document.createElement("div");
+// abrir sobre
+function abrir(){
+    document.getElementById("sobre").classList.add("open");
+}
+
+// corazones fondo
+for(let i=0;i<30;i++){
+    let heart=document.createElement("div");
     heart.className="heart";
     heart.innerHTML="💜";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*25+10)+"px";
+    heart.style.fontSize=(Math.random()*20+10)+"px";
     heart.style.animationDuration=(Math.random()*5+4)+"s";
     document.body.appendChild(heart);
 }
 
 // tulipanes
-for(let i=0;i<20;i++){
-    let tulip = document.createElement("div");
+for(let i=0;i<18;i++){
+    let tulip=document.createElement("div");
     tulip.className="tulip";
     tulip.innerHTML="🌷";
     tulip.style.left=Math.random()*100+"vw";
@@ -135,23 +163,23 @@ for(let i=0;i<20;i++){
 }
 
 // botón NO escapa
-const noBtn = document.getElementById("no");
-
-noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 60);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+const noBtn=document.getElementById("no");
+noBtn.addEventListener("mouseover",()=>{
+    const x=Math.random()*(window.innerWidth-120);
+    const y=Math.random()*(window.innerHeight-80);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
 });
 
-// mensaje al aceptar
-function aceptar(){
-    document.body.innerHTML = `
+// aceptar
+function aceptar(e){
+    e.stopPropagation();
+    document.body.innerHTML=`
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:linear-gradient(180deg,#6a0dad,#b185db);color:white;text-align:center">
         <h1>💜 Sabía que dirías que sí 💜</h1>
-        <h2>Alisson, eres alguien muy especial</h2>
-        <p>Prometo hacerte sonreír todos los días</p>
-        <p>Gracias por aceptar ser mi San Valentín 🌷</p>
+        <h2>Alisson, me haces muy feliz</h2>
+        <p>Prometo cuidarte, hacerte reír y acompañarte siempre 🌷</p>
+        <p><b>Con amor:</b> Tu pedacito de melocotón 🍑</p>
     </div>
     `;
 }
@@ -159,5 +187,3 @@ function aceptar(){
 
 </body>
 </html>
-
-
