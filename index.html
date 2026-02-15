@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>San Valentín</title>
+<title>Para Alisson 💜</title>
 
 <style>
 body{
@@ -11,16 +11,16 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#ffccd5;
+    background:linear-gradient(180deg,#6a0dad,#b185db);
     overflow:hidden;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* corazones de fondo */
+/* corazones flotando */
 .heart{
     position:absolute;
-    color:#ff4d6d;
-    animation: float 6s infinite;
+    color:#e0aaff;
+    animation: float 7s infinite;
 }
 
 @keyframes float{
@@ -28,46 +28,63 @@ body{
     100%{transform: translateY(-10vh);}
 }
 
-/* corazón principal */
+/* tulipanes flotando */
+.tulip{
+    position:absolute;
+    font-size:22px;
+    animation: float 9s infinite;
+}
+
+/* contenedor */
 .container{
     text-align:center;
     position:relative;
+    background:rgba(255,255,255,0.1);
+    padding:40px;
+    border-radius:25px;
+    backdrop-filter: blur(6px);
 }
 
+/* corazón grande */
 .big-heart{
-    font-size:150px;
-    color:#ff4d6d;
+    font-size:130px;
+    color:#e0aaff;
 }
 
-/* texto */
+/* texto principal */
 h1{
-    position:absolute;
-    top:40%;
-    left:50%;
-    transform:translate(-50%, -50%);
     color:white;
+    margin-top:-90px;
+}
+
+/* frases */
+.frases{
+    color:#f8edff;
+    margin-top:15px;
+    font-size:18px;
 }
 
 /* botones */
 .buttons{
-    margin-top:20px;
+    margin-top:25px;
 }
 
 button{
-    padding:10px 20px;
+    padding:12px 25px;
     font-size:18px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     cursor:pointer;
+    margin:10px;
 }
 
 #yes{
-    background:#28a745;
+    background:#9d4edd;
     color:white;
 }
 
 #no{
-    background:#dc3545;
+    background:#5a189a;
     color:white;
     position:absolute;
 }
@@ -77,37 +94,70 @@ button{
 <body>
 
 <div class="container">
-    <div class="big-heart">❤</div>
-    <h1>¿Quieres ser mi San Valentín?</h1>
+    <div class="big-heart">💜</div>
+
+    <h1>Alisson Marmolejo</h1>
+
+    <div class="frases">
+        <p>¿Quieres ser mi San Valentín?</p>
+        <p>Eres la razón por la que sonrío sin darme cuenta.</p>
+        <p>Contigo todo se siente más bonito.</p>
+        <p>Si el amor tuviera un nombre… sería el tuyo.</p>
+    </div>
 
     <div class="buttons">
-        <button id="yes" onclick="alert('Sabía que dirías que sí ❤️')">Sí</button>
+        <button id="yes" onclick="aceptar()">Sí 💜</button>
         <button id="no">No</button>
     </div>
 </div>
 
 <script>
-// Crear corazones de fondo
-for(let i=0;i<40;i++){
+// corazones de fondo
+for(let i=0;i<35;i++){
     let heart = document.createElement("div");
     heart.className="heart";
-    heart.innerHTML="❤";
+    heart.innerHTML="💜";
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+10)+"px";
-    heart.style.animationDuration=(Math.random()*5+3)+"s";
+    heart.style.fontSize=(Math.random()*25+10)+"px";
+    heart.style.animationDuration=(Math.random()*5+4)+"s";
     document.body.appendChild(heart);
 }
 
-// Botón NO se escapa
+// tulipanes
+for(let i=0;i<20;i++){
+    let tulip = document.createElement("div");
+    tulip.className="tulip";
+    tulip.innerHTML="🌷";
+    tulip.style.left=Math.random()*100+"vw";
+    tulip.style.top=Math.random()*100+"vh";
+    tulip.style.animationDuration=(Math.random()*6+5)+"s";
+    document.body.appendChild(tulip);
+}
+
+// botón NO escapa
 const noBtn = document.getElementById("no");
 
 noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 });
+
+// mensaje al aceptar
+function aceptar(){
+    document.body.innerHTML = `
+    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:linear-gradient(180deg,#6a0dad,#b185db);color:white;text-align:center">
+        <h1>💜 Sabía que dirías que sí 💜</h1>
+        <h2>Alisson, eres alguien muy especial</h2>
+        <p>Prometo hacerte sonreír todos los días</p>
+        <p>Gracias por aceptar ser mi San Valentín 🌷</p>
+    </div>
+    `;
+}
 </script>
 
 </body>
 </html>
+
+
