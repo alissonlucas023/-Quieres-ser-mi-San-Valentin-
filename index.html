@@ -2,174 +2,208 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>San Valentín 💖</title>
+<title>Nuestro Árbol de Amor</title>
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f8e7e7;
-        overflow: hidden;
-        text-align: center;
-    }
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#fdeaea;
+    text-align:center;
+    overflow:hidden;
+}
 
-    .pantalla {
-        position: absolute;
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 1s;
-    }
+.pantalla{
+    position:absolute;
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    transition:1s;
+}
 
-    #inicio {
-        background: linear-gradient(#ffd6d6, #fff);
-    }
+#arbol{
+    opacity:0;
+    pointer-events:none;
+}
 
-    #arbol {
-        background: #f5e1e1;
-        opacity: 0;
-        pointer-events: none;
-    }
+.corazon{
+    font-size:85px;
+    cursor:pointer;
+    animation:latido 1s infinite;
+}
 
-    h1 {
-        color: #b30000;
-        margin-bottom: 20px;
-    }
+@keyframes latido{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.2)}
+    100%{transform:scale(1)}
+}
 
-    .corazon {
-        font-size: 80px;
-        cursor: pointer;
-        animation: latido 1s infinite;
-    }
+/* Semilla */
+.semilla{
+    width:20px;
+    height:20px;
+    background:brown;
+    border-radius:50%;
+    margin-top:40px;
+    animation:aparecer 1s forwards;
+}
 
-    @keyframes latido {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
+@keyframes aparecer{
+    from{transform:scale(0)}
+    to{transform:scale(1)}
+}
 
-    .tree {
-        position: relative;
-        margin-top: 40px;
-    }
+/* Tronco creciendo */
+.tronco{
+    width:18px;
+    height:0;
+    background:brown;
+    margin:auto;
+    transition:height 2s;
+}
 
-    .tronco {
-        width: 20px;
-        height: 120px;
-        background: brown;
-        margin: auto;
-    }
+/* Copa de corazones */
+.copa{
+    position:relative;
+    width:180px;
+    height:180px;
+    margin:auto;
+    margin-top:-10px;
+    opacity:0;
+    transition:1.5s;
+}
 
-    .mensaje {
-        margin-top: 15px;
-        font-size: 18px;
-        color: #7a0000;
-    }
+.copa span{
+    position:absolute;
+    color:red;
+    font-size:24px;
+}
 
-    .falling-heart {
-        position: absolute;
-        color: red;
-        font-size: 20px;
-        animation: caer 6s linear infinite;
-    }
+/* corazones cayendo */
+.falling{
+    position:absolute;
+    color:red;
+    animation:caer 6s linear infinite;
+}
 
-    @keyframes caer {
-        from {
-            transform: translateY(-50px);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(600px);
-            opacity: 0;
-        }
-    }
+@keyframes caer{
+    from{transform:translateY(-40px)}
+    to{transform:translateY(600px); opacity:0}
+}
+
+.mensaje{
+    margin-top:15px;
+    font-size:18px;
+    color:#7a0000;
+}
 </style>
 </head>
 <body>
 
-<!-- Pantalla inicial -->
+<!-- Pantalla inicio -->
 <div id="inicio" class="pantalla">
-    <h1>San Valentín 💘</h1>
-    <div class="corazon" onclick="mostrarArbol()">❤️</div>
+    <h1>San Valentín ❤️</h1>
+    <div class="corazon" onclick="iniciar()">❤️</div>
     <p>Presiona el corazón</p>
 </div>
 
-<!-- Pantalla del árbol -->
+<!-- Pantalla árbol -->
 <div id="arbol" class="pantalla">
-    <h1>Para el amor de mi vida</h1>
+    <h2>De una semilla nació nuestro amor</h2>
 
-    <div class="tree">
-        <div class="tronco"></div>
-    </div>
+    <div class="semilla" id="semilla"></div>
+    <div class="tronco" id="tronco"></div>
+
+    <div class="copa" id="copa"></div>
 
     <div class="mensaje" id="tiempo"></div>
     <div class="mensaje" id="frase"></div>
 </div>
 
 <script>
-function mostrarArbol() {
-    document.getElementById("inicio").style.opacity = 0;
-    setTimeout(() => {
-        document.getElementById("inicio").style.display = "none";
-        let arbol = document.getElementById("arbol");
-        arbol.style.opacity = 1;
-        arbol.style.pointerEvents = "auto";
-    }, 800);
+function iniciar(){
+    document.getElementById("inicio").style.opacity=0;
 
-    crearCorazones();
+    setTimeout(()=>{
+        document.getElementById("inicio").style.display="none";
+        let arbol=document.getElementById("arbol");
+        arbol.style.opacity=1;
+        arbol.style.pointerEvents="auto";
+        crecer();
+    },800);
+}
+
+function crecer(){
+    // crecer tronco
+    setTimeout(()=>{
+        document.getElementById("tronco").style.height="130px";
+    },1000);
+
+    // mostrar copa
+    setTimeout(()=>{
+        let copa=document.getElementById("copa");
+        copa.style.opacity=1;
+
+        // crear corazones formando el árbol
+        for(let i=0;i<35;i++){
+            let h=document.createElement("span");
+            h.innerHTML="❤️";
+            h.style.left=(Math.random()*160)+"px";
+            h.style.top=(Math.random()*120)+"px";
+            copa.appendChild(h);
+        }
+    },2800);
+
+    lluviaCorazones();
     mostrarTiempo();
-    frasesRomanticas();
+    frases();
 }
 
-function crearCorazones() {
-    setInterval(() => {
-        let heart = document.createElement("div");
-        heart.className = "falling-heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.top = "-20px";
-        heart.style.fontSize = (15 + Math.random()*25) + "px";
-        document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 6000);
-    }, 300);
+function lluviaCorazones(){
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="falling";
+        h.innerHTML="❤️";
+        h.style.left=Math.random()*window.innerWidth+"px";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+    },350);
 }
 
-function mostrarTiempo() {
-    // Fecha cuando empezaron (CAMBIA ESTA FECHA)
-    let inicio = new Date("2022-12-14");
+function mostrarTiempo(){
+    let inicio=new Date("2022-12-14"); // cambia si quieres exacto
+    let hoy=new Date();
 
-    let hoy = new Date();
-    let años = hoy.getFullYear() - inicio.getFullYear();
-    let meses = hoy.getMonth() - inicio.getMonth();
+    let años=hoy.getFullYear()-inicio.getFullYear();
+    let meses=hoy.getMonth()-inicio.getMonth();
 
-    if (meses < 0) {
+    if(meses<0){
         años--;
-        meses += 12;
+        meses+=12;
     }
 
-    document.getElementById("tiempo").innerHTML =
-        "Llevamos juntos: <b>" + años + " años y " + meses + " meses</b> ❤️";
+    document.getElementById("tiempo").innerHTML=
+    "Nuestro amor ha crecido por: <b>"+años+" años y "+meses+" meses</b> ❤️";
 }
 
-function frasesRomanticas() {
-    let lista = [
-        "Eres mi lugar seguro 💕",
-        "Contigo todo es mejor 🌹",
-        "Gracias por estos 3 años y 2 meses",
+function frases(){
+    let lista=[
+        "Todo empezó con una pequeña semilla 🌱",
+        "Y hoy tenemos un árbol lleno de amor ❤️",
+        "3 años y 2 meses a tu lado",
+        "Eres mi lugar seguro",
         "Eres mi felicidad diaria",
-        "Te amo más cada día",
-        "Eres mi vida entera"
+        "Quiero toda una vida contigo"
     ];
 
-    let i = 0;
-    setInterval(() => {
-        document.getElementById("frase").innerText = lista[i];
-        i = (i + 1) % lista.length;
-    }, 2500);
+    let i=0;
+    setInterval(()=>{
+        document.getElementById("frase").innerText=lista[i];
+        i=(i+1)%lista.length;
+    },2500);
 }
 </script>
 
