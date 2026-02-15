@@ -2,162 +2,174 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para Alisson 💜</title>
+<title>San Valentín 💖</title>
 
 <style>
-body{
-    margin:0;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(180deg,#6a0dad,#b185db);
-    font-family:'Segoe UI', sans-serif;
-    overflow:hidden;
-}
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f8e7e7;
+        overflow: hidden;
+        text-align: center;
+    }
 
-/* CORAZONES FONDO */
-.heart-bg{
-    position:absolute;
-    color:#e0aaff;
-    animation: float 6s infinite;
-}
-@keyframes float{
-    0%{transform: translateY(100vh);}
-    100%{transform: translateY(-10vh);}
-}
+    .pantalla {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s;
+    }
 
-/* CONTENEDOR PRINCIPAL */
-.container{
-    position:relative;
-    width:420px;
-    height:520px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+    #inicio {
+        background: linear-gradient(#ffd6d6, #fff);
+    }
 
-/* CORAZÓN GRANDE */
-.big-heart{
-    font-size:320px;
-    color:#c77dff;
-    animation: beat 1.2s infinite;
-}
+    #arbol {
+        background: #f5e1e1;
+        opacity: 0;
+        pointer-events: none;
+    }
 
-@keyframes beat{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.08);}
-    100%{transform:scale(1);}
-}
+    h1 {
+        color: #b30000;
+        margin-bottom: 20px;
+    }
 
-/* CONTENIDO CENTRADO */
-.content{
-    position:absolute;
-    width:65%;
-    text-align:center;
-    color:white;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-}
+    .corazon {
+        font-size: 80px;
+        cursor: pointer;
+        animation: latido 1s infinite;
+    }
 
-/* TÍTULO */
-.content h1{
-    font-size:26px;
-    margin:0;
-}
+    @keyframes latido {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
 
-/* MENSAJES BONITOS */
-.message-box{
-    background:rgba(255,255,255,0.15);
-    padding:8px 12px;
-    border-radius:12px;
-    backdrop-filter:blur(6px);
-    font-size:14px;
-    width:100%;
-}
+    .tree {
+        position: relative;
+        margin-top: 40px;
+    }
 
-/* BOTONES */
-.buttons{
-    margin-top:10px;
-    position:relative;
-}
+    .tronco {
+        width: 20px;
+        height: 120px;
+        background: brown;
+        margin: auto;
+    }
 
-button{
-    padding:8px 18px;
-    font-size:16px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    margin:5px;
-}
+    .mensaje {
+        margin-top: 15px;
+        font-size: 18px;
+        color: #7a0000;
+    }
 
-#yes{
-    background:#9d4edd;
-    color:white;
-}
+    .falling-heart {
+        position: absolute;
+        color: red;
+        font-size: 20px;
+        animation: caer 6s linear infinite;
+    }
 
-#no{
-    background:#5a189a;
-    color:white;
-    position:absolute;
-}
+    @keyframes caer {
+        from {
+            transform: translateY(-50px);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(600px);
+            opacity: 0;
+        }
+    }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-    <div class="big-heart">💜</div>
+<!-- Pantalla inicial -->
+<div id="inicio" class="pantalla">
+    <h1>San Valentín 💘</h1>
+    <div class="corazon" onclick="mostrarArbol()">❤️</div>
+    <p>Presiona el corazón</p>
+</div>
 
-    <div class="content">
-        <h1>Alisson Marmolejo</h1>
+<!-- Pantalla del árbol -->
+<div id="arbol" class="pantalla">
+    <h1>Para el amor de mi vida</h1>
 
-        <div class="message-box">¿Quieres ser mi San Valentín?</div>
-        <div class="message-box">Eres la razón por la que sonrío sin darme cuenta.</div>
-        <div class="message-box">Contigo todo se siente más bonito.</div>
-        <div class="message-box">Alegras mis días como los tulipanes en primavera 🌷</div>
-        <div class="message-box">Si el amor tuviera nombre… sería el tuyo.</div>
-        <div class="message-box"><b>Con amor: Tu pedacito de melocotón 🍑</b></div>
-
-        <div class="buttons">
-            <button id="yes" onclick="aceptar()">Sí 💜</button>
-            <button id="no">No</button>
-        </div>
+    <div class="tree">
+        <div class="tronco"></div>
     </div>
+
+    <div class="mensaje" id="tiempo"></div>
+    <div class="mensaje" id="frase"></div>
 </div>
 
 <script>
-// corazones flotando
-for(let i=0;i<25;i++){
-    let heart=document.createElement("div");
-    heart.className="heart-bg";
-    heart.innerHTML="💜";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+10)+"px";
-    heart.style.animationDuration=(Math.random()*5+4)+"s";
-    document.body.appendChild(heart);
+function mostrarArbol() {
+    document.getElementById("inicio").style.opacity = 0;
+    setTimeout(() => {
+        document.getElementById("inicio").style.display = "none";
+        let arbol = document.getElementById("arbol");
+        arbol.style.opacity = 1;
+        arbol.style.pointerEvents = "auto";
+    }, 800);
+
+    crearCorazones();
+    mostrarTiempo();
+    frasesRomanticas();
 }
 
-// botón NO escapa
-const noBtn=document.getElementById("no");
-noBtn.addEventListener("mouseover",()=>{
-    const x=Math.random()*(window.innerWidth-100);
-    const y=Math.random()*(window.innerHeight-60);
-    noBtn.style.left=x+"px";
-    noBtn.style.top=y+"px";
-});
+function crearCorazones() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.className = "falling-heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = "-20px";
+        heart.style.fontSize = (15 + Math.random()*25) + "px";
+        document.body.appendChild(heart);
 
-// aceptar
-function aceptar(){
-    document.body.innerHTML=`
-    <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;background:linear-gradient(180deg,#6a0dad,#b185db);color:white;text-align:center">
-        <h1 style="font-size:40px;">💜 Sabía que dirías que sí 💜</h1>
-        <p style="font-size:20px;">Alisson, prometo hacerte feliz cada día 🌷</p>
-        <p style="font-size:20px;"><b>Con amor: Tu pedacito de melocotón 🍑</b></p>
-    </div>
-    `;
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
+}
+
+function mostrarTiempo() {
+    // Fecha cuando empezaron (CAMBIA ESTA FECHA)
+    let inicio = new Date("2022-12-14");
+
+    let hoy = new Date();
+    let años = hoy.getFullYear() - inicio.getFullYear();
+    let meses = hoy.getMonth() - inicio.getMonth();
+
+    if (meses < 0) {
+        años--;
+        meses += 12;
+    }
+
+    document.getElementById("tiempo").innerHTML =
+        "Llevamos juntos: <b>" + años + " años y " + meses + " meses</b> ❤️";
+}
+
+function frasesRomanticas() {
+    let lista = [
+        "Eres mi lugar seguro 💕",
+        "Contigo todo es mejor 🌹",
+        "Gracias por estos 3 años y 2 meses",
+        "Eres mi felicidad diaria",
+        "Te amo más cada día",
+        "Eres mi vida entera"
+    ];
+
+    let i = 0;
+    setInterval(() => {
+        document.getElementById("frase").innerText = lista[i];
+        i = (i + 1) % lista.length;
+    }, 2500);
 }
 </script>
 
